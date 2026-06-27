@@ -109,6 +109,10 @@ Assets/Scenes/Backup/
 .com-unity-codely.json
 .codely-cli/
 
+# Harpia Camping Pack 的 Demo Scenes (22M,Unity 可重新生成,游戏不需要)
+Assets/Harpia Games/Camping Pack/Demo Scenes/
+Assets/Harpia Games/Camping Pack/Demo Scenes.meta
+
 # =========================================
 # Claude 临时文件
 # =========================================
