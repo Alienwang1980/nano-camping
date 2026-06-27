@@ -1,0 +1,3 @@
+[submodule "Packages/unity-mcp-plugin"]
+	path = Packages/unity-mcp-plugin
+	url = https://github.com/AnkleBreaker-Studio/unity-mcp-plugin.git
