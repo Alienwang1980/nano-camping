@@ -49,6 +49,10 @@ namespace NanoCamping
         bool _rightDragging;
         Vector2 _leftDownPos;
         Vector2 _rightDownPos;
+        // 本次 left down 是否用于旋转(由 PM 在 down 时通过 pmConsumedLeftDown 决定)
+        // true  = 空白处按下,相机接管左键用于旋转
+        // false = PM 接管(选中/拖动物件/放置),相机不响应
+        bool _camRotateActive;
 
         public PlacementManager placement;  // 注入:用于判断是否在 Idle 态
 
@@ -114,15 +118,19 @@ namespace NanoCamping
             bool leftHeld = Input.GetMouseButton(0);
             bool rightHeld = Input.GetMouseButton(1);
 
-            // 左键 down
+            // 左键 down — 询问 PM 是否要占用左键
             if (Input.GetMouseButtonDown(0))
             {
                 _leftDragging = true;
                 _leftDownPos = Input.mousePosition;
+                // PM 命中物件(选中/拖动)或 放置态点地面 → PM 占用,相机不响应
+                bool pmWants = placement != null && placement.pmConsumedLeftDown;
+                _camRotateActive = !pmWants;
             }
             if (Input.GetMouseButtonUp(0))
             {
                 _leftDragging = false;
+                _camRotateActive = false;
             }
 
             // 右键 down
@@ -136,8 +144,8 @@ namespace NanoCamping
                 _rightDragging = false;
             }
 
-            // Idle + 左键拖动 → 旋转
-            if (idle && _leftDragging && leftHeld)
+            // 左键拖动 → 旋转(只要 PM 没占用)
+            if (_camRotateActive && _leftDragging && leftHeld)
             {
                 float mx = Input.GetAxisRaw("Mouse X");
                 if (Mathf.Abs(mx) > 0.001f)

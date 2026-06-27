@@ -42,6 +42,12 @@ namespace NanoCamping
         public int currentIndex = -1;  // 默认 Idle(没有选物件);>=0 进入放置态
         public GameObject currentSelected;
 
+        // 本次 left down 是否被 PM 占用(命中物件 / 放置物件)。
+        // IsoCamera 在 left down 那一帧读这个标志,决定本次左键拖动 = 旋转 还是 让位给 PM。
+        // true  = PM 处理(选中/拖动/放置)
+        // false = 空白处按下,相机接管用于旋转
+        public bool pmConsumedLeftDown;
+
         public SelectionIndicator indicator;
         public GhostPreview ghost;
         public IsoCamera isoCam;
@@ -123,10 +129,12 @@ namespace NanoCamping
                 _mouseDownPos = mousePos;
                 _didDrag = false;
                 _dragging = null;
+                pmConsumedLeftDown = false;  // 默认:让相机接管(可旋转)
 
                 if (TryRaycastObject(mousePos, out var hitObj, out var hitPoint))
                 {
-                    // 点中物件
+                    // 点中物件 — PM 占用左键(选中/拖动)
+                    pmConsumedLeftDown = true;
                     if (currentSelected == null && currentIndex < 0)
                     {
                         // Idle → 进入 Manipulating(只有真正 Idle 才进编辑)
@@ -161,12 +169,13 @@ namespace NanoCamping
                     bool hitGround = TryRaycastGround(mousePos, out var groundPoint);
                     if (currentSelected != null)
                     {
-                        // Manipulating:点空地忽略(避免误触取消)
+                        // Manipulating:点空地 — 留空给相机旋转(用户新需求:编辑模式左键拖空白处也能旋转)
                     }
                     else if (hitGround && currentIndex >= 0)
                     {
                         // 放置态:点地面放置(放完即退,放完 currentIndex=-1 后不再触发)
                         PlaceCurrent(groundPoint);
+                        pmConsumedLeftDown = true;  // 放完物件也算 PM 占用
                     }
                 }
             }
@@ -188,6 +197,12 @@ namespace NanoCamping
             {
                 if (_didDrag) SettleOne(_dragging);
                 _dragging = null;
+            }
+
+            if (up)
+            {
+                // 释放左键 → PM 不再占用,后续 left down 由 PM 重新决定
+                pmConsumedLeftDown = false;
             }
         }
 
