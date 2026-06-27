@@ -1,0 +1,116 @@
+# =========================================
+# Unity 标准 .gitignore (Tuanjie / Unity 2022.3)
+# =========================================
+
+# Unity 临时目录(可重新生成)
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Uu]ser[Ss]ettings/
+[Mm]emoryCaptures/
+
+# Asset meta data should only be ignored when the corresponding asset is also ignored
+!/[Aa]ssets/**/*.meta
+
+# Recordings and capture files
+*.pidb.meta
+*.pdb.meta
+*.mdb.meta
+
+# Unity3D-generated build files
+*.apk
+*.aab
+*.unitypackage
+*.app
+
+# Crashlytics
+crashlytics-build.properties
+
+# Packed Addressables
+/[Aa]ssets/[Aa]ddressable[Aa]ssets[Dd]ata/*/*.bin*
+
+# Temporary auto-generated Android Assets
+/[Aa]ssets/[Ss]treamingAssets/aa.meta
+/[Aa]ssets/[Ss]treamingAssets/aa/*
+
+# =========================================
+# IDE / 编辑器
+# =========================================
+.vs/
+.vscode/
+.idea/
+*.csproj
+*.unityproj
+*.sln
+*.suo
+*.tmp
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+*.pdb
+*.mdb
+*.opendb
+*.VC.db
+*.pidb.meta
+*.pdb.meta
+*.mdb.meta
+
+# =========================================
+# Unity 自动生成文件
+# =========================================
+sysinfo.txt
+*.apk
+*.aab
+*.unitypackage
+*.app
+crashlytics-build.properties
+ExportedObj/
+.consulo/
+*.svd
+*.pdb
+*.mdb
+*.opendb
+*.VC.db
+
+# =========================================
+# Builds
+# =========================================
+*.apk
+*.aab
+*.unitypackage
+*.app
+*.ipa
+*.exe
+*.msi
+*.dmg
+
+# =========================================
+# OS
+# =========================================
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# =========================================
+# Tuanjie 特定
+# =========================================
+Assets/Scripts/Generated/
+Assets/Scenes/Backup/
+*.codely-cli
+.com-unity-codely.json
+.codely-cli/
+
+# =========================================
+# Claude 临时文件
+# =========================================
+*.log
+nohup.out
